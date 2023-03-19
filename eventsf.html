@@ -67,17 +67,41 @@
     </header>
 
     <main class="flex-grow-1">
-        <div class="d-flex navbar justify-content-evenly h4 pb-2 mb-4 text-danger border-bottom border-danger strong">
-            <div id="inlineCheckbox">
+        <div id="cards">
+            <div class="d-flex navbar justify-content-evenly h4 pb-2 mb-4 text-danger border-bottom border-danger strong">
+    
+                <!-- Categorías -->
+                <div class="d-flex flex-wrap justify-content-between form-check-label p-3" id="inlineCheckbox">
+                    <template v-if="categories" v-for="categ of categories">
+                      <label class="text-category form-check-label text-light blockquote" style="margin-right: 10px;">
+                        <input class="form-check-input" v-on:change="filtro" v-model="checked" type="checkbox" :value="categ">
+                        {{ categ }}
+                      </label>
+                    </template>
+                    <!-- {{ checked }} -->
+                  </div>
+
+                <!-- Buscador -->
+                <form class="d-flex" role="search" id="search-form">
+                    <input class="form-control me-1" type="search" v-on:keyup="filtro" v-model="valorBusqueda" placeholder="Search" aria-label="Search">
+                <!-- {{valorBusqueda}} -->
+                </form>
+    
             </div>
-
-            <form class="d-flex" role="search" id="search-form">
-                <input class="form-control me-1" type="search" placeholder="Search" aria-label="Search">
-            </form>
-        </div>
-
-        <div class="d-flex flex-column justify-content-center">
-            <div class="d-flex flex-wrap justify-content-evenly" id="cardEventsf">
+    
+            <!-- Cards -->
+            <div class="d-flex flex-wrap justify-content-center" id="cardEvents">
+                <div class="card m-2 text-center" v-for="evento of eventsFiltrados" style="width:18rem" class="cardDetails">
+                    <img v-bind:src="evento.image" class="fotos card-img-top" style="height:150px" v-bind:alt="evento.name">
+                    <div class="card-body d-flex flex-column align-items-center text-center">
+                        <h5 class="card-title">{{evento.name}}</h5>
+                        <p class="card-text">{{evento.description}}</p>
+                    </div>
+                    <div class="card-footer d-flex flex-column align-items-center">
+                        <small class="text-muted">{{evento.price}}</small>
+                        <a href="./details.html?id=evento.id" class="boton btn btn-danger">Details</a>
+                    </div>
+                </div>
             </div>
         </div>
     </main>
@@ -111,8 +135,9 @@
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha1/dist/js/bootstrap.bundle.min.js"
         integrity="sha384-w76AqPfDkMBDXo30jS1Sgez6pr3x5MlQ1ZAGC+nuZB+EYdgRZgiwxhTBTkF7CXvN"
         crossorigin="anonymous"></script>
-        <script src="./scripts/eventsf.js"></script>
-        <script src="https://unpkg.com/sweetalert/dist/sweetalert.min.js"></script>
+    <script src="https://unpkg.com/vue@3.2.16/dist/vue.global.js"></script>
+    <script src="./scripts/eventsf.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
 
 </body>
 
