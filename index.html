@@ -69,13 +69,16 @@
 
     <main class="flex-grow-1">
         <div id="cards">
+            {{ filtro }}
             <div class="d-flex navbar justify-content-evenly h4 pb-2 mb-4 text-danger border-bottom border-danger strong">
     
                 <!-- Categorías -->
                 <div class="d-flex flex-wrap justify-content-between form-check-label p-3" id="inlineCheckbox">
                     <template v-if="categories" v-for="categ of categories">
                       <label class="text-category form-check-label text-light blockquote" style="margin-right: 10px;">
-                        <input class="form-check-input" v-on:change="filtro" v-model="checked" type="checkbox" :value="categ">
+                        <!-- <input class="form-check-input" v-on:change="filtro" v-model="checked" type="checkbox" 
+                        :value="categ"> -->
+                        <input class="form-check-input" v-model="checked" type="checkbox" :value="categ">
                         {{ categ }}
                       </label>
                     </template>
@@ -84,7 +87,9 @@
 
                 <!-- Buscador -->
                 <form class="d-flex" role="search" id="search-form">
-                    <input class="form-control me-1" type="search" v-on:keyup="filtro" v-model="valorBusqueda" placeholder="Search" aria-label="Search">
+                    <!-- <input class="form-control me-1" type="search" v-on:keyup="filtro" v-model="valorBusqueda" 
+                    placeholder="Search" aria-label="Search"> -->
+                    <input class="form-control me-1" type="search" v-model="valorBusqueda" placeholder="Search" aria-label="Search">
                 <!-- {{valorBusqueda}} -->
                 </form>
     
@@ -92,7 +97,8 @@
     
             <!-- Cards -->
             <div class="d-flex flex-wrap justify-content-center" id="cardEvents">
-                <div class="card m-2 text-center" v-for="evento of eventsFiltrados" style="width:18rem" class="cardDetails">
+                <div class="card m-2 text-center" v-if="eventsFiltrados" v-for="evento of eventsFiltrados" 
+                    style="width:18rem" class="cardDetails">
                     <img v-bind:src="evento.image" class="fotos card-img-top" style="height:150px" v-bind:alt="evento.name">
                     <div class="card-body d-flex flex-column align-items-center text-center">
                         <h5 class="card-title">{{evento.name}}</h5>
@@ -100,7 +106,7 @@
                     </div>
                     <div class="card-footer d-flex flex-column align-items-center">
                         <small class="text-muted">{{evento.price}}</small>
-                        <a href="./details.html?id=evento.id" class="boton btn btn-danger">Details</a>
+                        <a :href="'./details.html?id=' + evento.id" class="boton btn btn-danger">Details</a>
                     </div>
                 </div>
             </div>

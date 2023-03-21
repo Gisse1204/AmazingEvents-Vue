@@ -1,16 +1,18 @@
 const { createApp } = Vue;
 const url = "https://mh.up.railway.app/api/amazing-events";
+
 createApp({
   data() {
     return {
-      events: undefined,
-      categories: undefined,
-      eventsFiltrados : undefined,
+      events: [],
+      categories: [],
+      eventsFiltrados : [],
       valorBusqueda : '',
       checked : [],
-      /* evento: undefined, */
+      resultadosEncontrados: true,
     };
   },
+
   created() {
     fetch(url)
       .then(response => response.json())
@@ -26,8 +28,7 @@ createApp({
       .catch((err) => console.log(err));
   },
   methods: {
-    filtro(){
-      /* console.log('funciona') */
+    /* filtro(){
       this.eventsFiltrados = this.events.filter( evento => 
         (this.checked.includes(evento.category) || this.checked.length === 0) 
         && evento.name.toLowerCase().includes(this.valorBusqueda.toLowerCase()));
@@ -45,6 +46,31 @@ createApp({
             }
           });
     }
-    }},
-  computed: {},
-}).mount("#cards");
+    } */},
+    computed: {
+      filtro() {
+        /* console.log('funciona') */
+        this.eventsFiltrados = this.events.filter( evento => 
+          (this.checked.includes(evento.category) || this.checked.length === 0) 
+          && evento.name.toLowerCase().includes(this.valorBusqueda.toLowerCase()));
+          this.resultadosEncontrados = this.eventsFiltrados.length > 0;
+      
+      if (!this.resultadosEncontrados) {
+        Swal.fire({
+          icon: 'warning',
+          title: 'No matches found',
+          text: 'Please try another search',
+          confirmButtonText: 'OK'
+        }).then((result) => {
+          if (result.isConfirmed) {
+            this.eventsFiltrados = this.events;
+            this.valorBusqueda = '';
+            this.checked = [];
+          }
+        });
+      }
+      },
+    },
+  }).mount("#cards");
+
+

@@ -4,14 +4,14 @@ const url = "https://mh.up.railway.app/api/amazing-events?time=upcoming";
 createApp({
   data() {
     return {
-      events: undefined,
-      categories: undefined,
-      eventsFiltrados : undefined,
+      events: [],
+      categories: [],
+      eventsFiltrados : [],
       valorBusqueda : '',
       checked : [],
-      /* evento: undefined, */
     };
   },
+  
   created() {
     fetch(url)
       .then(response => response.json())

@@ -99,7 +99,7 @@
                     </div>
                     <div class="card-footer d-flex flex-column align-items-center">
                         <small class="text-muted">{{evento.price}}</small>
-                        <a href="./details.html?id=evento.id" class="boton btn btn-danger">Details</a>
+                        <a :href="'./details.html?id=' + evento.id" class="boton btn btn-danger">Details</a>
                     </div>
                 </div>
             </div>
