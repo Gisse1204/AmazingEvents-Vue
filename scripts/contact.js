@@ -1,27 +1,40 @@
-function EnviarFormulario() {
-    try {
-        let name = document.getElementById('inputName').value;
-        let email = document.getElementById('inputEmail').value;
-        let message = document.getElementById('inputMessage').value;
-        if (name && email && message) {
-            console.log('Name:', name);
-            console.log('Email:', email);
-            console.log('Message:', message);
-            swal({
-                title: "Message sent successfully!",
-                icon: "success",
-                text: `Name: ${name}\nEmail: ${email}\nMessage: ${message}`
-            }).then(() => {
-                location.reload();
-            });
-        } else {
-            throw new Error("Please fill in all fields");
+const { createApp } = Vue;
+
+createApp({
+    data() {
+        return {
+            name: '',
+            email: '',
+            message: '',
         }
-    } catch (error) {
-        swal({
-            title: "Error",
-            text: error.message,
-            icon: "error"
-        });
+    },
+
+    methods: {
+        EnviarFormulario() {
+            try {
+                if (this.name && this.email && this.message) {
+                    console.log('Name:', this.name);
+                    console.log('Email:', this.email);
+                    console.log('Message:', this.message);
+                    swal({
+                        title: "Message sent successfully!",
+                        icon: "success",
+                        text: `Name: ${this.name}\nEmail: ${this.email}\nMessage: ${this.message}`
+                    }).then(() => {
+                        location.reload();
+                    });
+                } else {
+                    throw new Error("Please fill in all fields");
+                }
+            } catch (error) {
+                swal({
+                    title: "Error",
+                    text: error.message,
+                    icon: "error"
+                });
+            }
+        }
     }
-}
+})
+
+.mount("#app");
